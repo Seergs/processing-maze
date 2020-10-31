@@ -19,7 +19,7 @@ void setup(){
  
   
   maze = new Maze(rows,columns);
-  player = new Player(288,20);
+  player = new Player();
   maze.generateMaze();
 }
 
@@ -38,7 +38,7 @@ void draw(){
     textSize(36);
     fill(0);
     text("¡Ganaste!", 225,310);
-    maze.printTimer(maze.getStartedTime());
+    maze.printTimer(maze.getTime());
   }else{
     maze.printTimer();
   }
@@ -47,7 +47,7 @@ void draw(){
 void keyPressed(){
     switch(keyCode){
       case 68:
-        if (player.getFinished())break;
+        if (player.getFinished()) break;
         if(!player.willCollideAhead("x")){
           player.moveRight();
         }
@@ -68,7 +68,7 @@ void keyPressed(){
         if (player.getFinished()) break;
         if (player.getY() == 540-player.getRectWidth()){ 
           player.setFinished(true);
-          maze.setStartedTime(millis()/1000);
+          maze.setTime(millis()/1000);
         }
         if(!player.willCollideAhead("y")){
          player.moveDown();
@@ -76,8 +76,7 @@ void keyPressed(){
         break;
       case 114:
       case 82:
-        player.setX(288);
-        player.setY(20);
+        player.resetPosition();
         maze.resetTimer();
         player.setFinished(false);
     }
@@ -306,9 +305,8 @@ class Player {
   int rectWidth;
   boolean finished;
   
-  Player(int x, int y){
-    this.x = x;
-    this.y=y;
+  Player(){
+    resetPosition();
     this.speed = 1;
     this.rectWidth = 25;
   }
@@ -399,5 +397,10 @@ class Player {
   
  void setFinished(boolean finished){
    this.finished = finished;
+ }
+ 
+ void resetPosition(){
+   this.x = 288;
+   this.y = 20;
  }
 }
