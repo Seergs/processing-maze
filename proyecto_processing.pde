@@ -21,9 +21,6 @@ void setup(){
   maze = new Maze(rows,columns);
   player = new Player(288,20);
   maze.generateMaze();
-  
-  maze.setStartedTime(millis()/1000);
-
 }
 
 void draw(){
@@ -95,14 +92,14 @@ class Maze {
   private int columns;
   private Cell current;
   private Stack<Boolean> unvisited;
-  private int startedTime;
+  private int time;
   
   Maze(int rows, int columns){
     this.rows = rows;
     this.columns = columns;
     this.grid = new Cell[rows][columns];
     this.unvisited = new Stack<Boolean>();
-    this.startedTime = millis()/1000;
+    this.time = millis()/1000;
     
     initialize();
   }
@@ -217,7 +214,7 @@ class Maze {
   }
   
   void printTimer(){
-    text("Tiempo: " + (millis()/1000 - this.startedTime), 20,35);
+    text("Tiempo: " + (millis()/1000 - this.time), 20,35);
   }
   
   void printTimer(int time){
@@ -227,7 +224,7 @@ class Maze {
   
   
   void resetTimer(){
-    this.startedTime = millis()/1000;
+    this.time = millis()/1000;
   }
   
   private Cell getCellByIndex(int i, int j){
@@ -238,12 +235,12 @@ class Maze {
     return this.grid[i][j];
   }
   
-  void setStartedTime(int time){
-    this.startedTime = time;
+  void setTime(int time){
+    this.time = time;
   }
   
-  int getStartedTime(){
-    return this.startedTime;
+  int getTime(){
+    return this.time;
   }
   
 }
